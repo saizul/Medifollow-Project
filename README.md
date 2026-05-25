@@ -1,123 +1,46 @@
-# CareLoop — Healthcare Platform Roadmap
+# CareLoop
 
-## Project Goal
-Build a complete healthcare management platform with:
+CareLoop is a Flutter/Firebase Android app architecture for a follow-up care system serving patients, doctors, and admins.
 
-- Patient portal
-- Doctor portal
-- Appointment system
-- Medicine reminder
-- Notification system
-- Admin dashboard
+This repository currently contains project architecture only. Product features are intentionally not implemented yet.
 
----
+## Architecture
 
-# Phase 1: Foundation & Setup
+- Flutter Android app
+- Firebase-ready bootstrap
+- Riverpod dependency injection and state management
+- Clean Architecture by feature
+- MVVM presentation layer
+- GoRouter navigation
+- Responsive layout helpers
+- Centralized theme system
 
-### Setup
-- [ ] Flutter project structure
-- [ ] Firebase integration
-- [ ] Firestore setup
-- [ ] Firebase Authentication
-- [ ] Routing architecture
-- [ ] State management (Riverpod)
+## First Local Setup
 
-### Cleanup
-- [ ] Remove Flutter demo code
-- [ ] Fix package conflicts
-- [ ] Remove deprecated code
-- [ ] Fix compile issues
+Flutter is not available in the current shell, so packages were not fetched here. Once Flutter is installed:
 
----
+```sh
+flutter pub get
+flutterfire configure
+flutter run
+```
 
-# Phase 2: Authentication
+After `flutterfire configure`, replace the placeholder values in:
 
-### Registration
-- [ ] Full registration form
-- [ ] Validation
-- [ ] User type selection
+- `lib/firebase_options.dart`
+- `android/app/google-services.json`
 
-### Login
-- [ ] Phone authentication
-- [ ] OTP verification
-- [ ] Session persistence
-- [ ] Logout
+Keep real Firebase secrets out of public source control when appropriate.
 
----
+## Folder Shape
 
-# Phase 3: Patient Dashboard
-
-- [ ] Welcome section
-- [ ] Profile avatar
-- [ ] Notifications
-- [ ] Upcoming appointment
-- [ ] Medicine reminders
-- [ ] Health summary
-- [ ] Bottom navigation
-
----
-
-# Phase 4: Doctor Module
-
-- [ ] Doctor profile
-- [ ] Doctor availability
-- [ ] Patient list
-- [ ] Appointment management
-
----
-
-# Phase 5: Appointment System
-
-- [ ] Appointment booking
-- [ ] Calendar integration
-- [ ] Available slots
-- [ ] Appointment status
-
-Status:
-- Pending
-- Confirmed
-- Completed
-- Cancelled
-
----
-
-# Phase 6: Medicine Reminder
-
-- [ ] Add medicine
-- [ ] Dosage
-- [ ] Reminder schedule
-- [ ] Notifications
-
----
-
-# Phase 7: History
-
-- [ ] Medical history
-- [ ] Prescription history
-- [ ] Reports
-
----
-
-# Phase 8: Notification System
-
-- [ ] Push notifications
-- [ ] Medicine reminders
-- [ ] Appointment reminders
-
----
-
-# Phase 9: Admin Dashboard
-
-- [ ] User management
-- [ ] Doctor management
-- [ ] Analytics
-- [ ] Reports
-
----
-
-# Phase 10: Release
-
-- [ ] flutter analyze
-- [ ] flutter test
-- [ ] Release build
-- [ ] GitHub upload
+```text
+lib/
+  app/                 App bootstrap, routing, theme
+  core/                Cross-cutting contracts and infrastructure
+  shared/              Reusable shared UI, data, and domain primitives
+  features/
+    patient/           Patient feature slice
+    doctor/            Doctor feature slice
+    admin/             Admin feature slice
+```
