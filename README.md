@@ -1,46 +1,58 @@
-# CareLoop
+# MediFollow
 
-CareLoop is a Flutter/Firebase Android app architecture for a follow-up care system serving patients, doctors, and admins.
+MediFollow (internal package name `careloop`) is a Flutter/Firebase Android app for a follow-up care system serving patients, doctors and admins. It provides the app architecture, navigation, theming and Firebase wiring; product features are being added incrementally.
 
-This repository currently contains project architecture only. Product features are intentionally not implemented yet.
+## Tech stack
 
-## Architecture
+- Flutter (Dart `>=3.4.0 <4.0.0`), Android target
+- Riverpod for dependency injection and state management
+- GoRouter for navigation
+- Firebase: Auth, Cloud Firestore, Cloud Messaging, Storage, Analytics, Crashlytics
+- Clean Architecture by feature with an MVVM presentation layer
 
-- Flutter Android app
-- Firebase-ready bootstrap
-- Riverpod dependency injection and state management
-- Clean Architecture by feature
-- MVVM presentation layer
-- GoRouter navigation
-- Responsive layout helpers
-- Centralized theme system
+## Getting started
 
-## First Local Setup
-
-Flutter is not available in the current shell, so packages were not fetched here. Once Flutter is installed:
+Prerequisites: Flutter stable, Android SDK, a Firebase project and the FlutterFire CLI.
 
 ```sh
 flutter pub get
-flutterfire configure
+flutterfire configure      # generates lib/firebase_options.dart
 flutter run
 ```
 
-After `flutterfire configure`, replace the placeholder values in:
+### Firebase configuration
 
-- `lib/firebase_options.dart`
-- `android/app/google-services.json`
+The repository ships placeholder values. Replace them with your own project's:
 
-Keep real Firebase secrets out of public source control when appropriate.
+- `lib/firebase_options.dart` - regenerate with `flutterfire configure`.
+- `android/app/google-services.json` - copy `android/app/google-services.json.example` and fill in your values (download the real file from the Firebase console).
 
-## Folder Shape
+Do not commit real keys for production projects. `android/local.properties` is machine specific and is git-ignored; Flutter creates it on first build.
+
+## Quality checks
+
+```sh
+flutter analyze
+flutter test
+```
+
+The same commands run in CI (`.github/workflows/ci.yml`) on every push to `main` and every pull request.
+
+## Project layout
 
 ```text
 lib/
   app/                 App bootstrap, routing, theme
-  core/                Cross-cutting contracts and infrastructure
-  shared/              Reusable shared UI, data, and domain primitives
+  core/                Config, errors, Firebase providers, result type, utils
+  shared/              Reusable view model base and adaptive widgets
   features/
-    patient/           Patient feature slice
-    doctor/            Doctor feature slice
-    admin/             Admin feature slice
+    auth/              Login, registration, OTP, splash
+    patient/           Patient home
+    doctor/            Doctor home
+    admin/             Admin slice
+    history/ notifications/ profile/ reminder/
 ```
+
+Each feature follows `data` / `domain` / `presentation` (pages, viewmodels, widgets).
+
+**Author:** [Saizul Amin](https://saizul.com)
